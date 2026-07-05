@@ -89,6 +89,27 @@
       to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
+    @keyframes glide {
+      from { transform: translateX(-2px) scale(.96); }
+      to { transform: translateX(8px) scale(1.04); }
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: translate(-50%, -50%) scale(.96) rotate(calc((var(--px, .5) - .5) * 18deg)); }
+      50% { transform: translate(-50%, -50%) scale(1.04) rotate(calc((var(--px, .5) - .5) * 18deg)); }
+    }
+
+    @keyframes orbitTilt {
+      from { transform: translate(-50%, -50%) rotate(-16deg) scale(.98); }
+      to { transform: translate(-50%, -50%) rotate(12deg) scale(1.02); }
+    }
+
+    @keyframes scan {
+      0% { transform: translateX(-120%); }
+      45%, 55% { transform: translateX(95%); }
+      100% { transform: translateX(240%); }
+    }
+
     button, input, textarea { font: inherit; }
     button {
       border: 0;
@@ -105,62 +126,60 @@
     .top {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 6px 2px 18px;
+      justify-content: center;
+      padding: 4px 2px 14px;
     }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 13px;
-    }
-
-    .mark {
-      width: 54px;
-      height: 54px;
-      border-radius: 20px;
-      display: grid;
-      place-items: center;
-      color: #ffffff;
+    .mini-widget {
+      position: relative;
+      width: 118px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      overflow: hidden;
       background:
-        radial-gradient(circle at 26% 20%, rgba(255,255,255,.86), transparent 22%),
-        linear-gradient(145deg, #8d9bff, #5ad1c6 58%, #d7b8ff);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 18px 42px rgba(105, 119, 244, .20);
-      font-size: 24px;
-      font-weight: 900;
+        linear-gradient(135deg, rgba(255,255,255,.80), rgba(255,255,255,.36)),
+        rgba(255,255,255,.50);
+      backdrop-filter: blur(22px) saturate(1.35);
+      -webkit-backdrop-filter: blur(22px) saturate(1.35);
+      box-shadow: 0 16px 42px rgba(64,91,128,.12), inset 0 1px 0 rgba(255,255,255,.80);
     }
 
-    .eyebrow {
-      margin: 0 0 4px;
-      color: var(--gold);
-      font-size: 11px;
-      letter-spacing: .24em;
-      text-transform: uppercase;
+    .mini-widget::before,
+    .mini-widget::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(.2px);
+      animation: glide 5.4s ease-in-out infinite alternate;
     }
 
-    h1 {
-      margin: 0;
-      font-size: 27px;
-      line-height: 1;
-      letter-spacing: -.055em;
+    .mini-widget::before {
+      width: 28px;
+      height: 28px;
+      left: 10px;
+      top: 7px;
+      background: linear-gradient(145deg, #8d9bff, #5ad1c6);
+      box-shadow: 34px 2px 0 -8px rgba(215,184,255,.70);
     }
 
-    .count {
-      flex: none;
-      color: var(--muted);
-      font-size: 14px;
-      letter-spacing: -.02em;
+    .mini-widget::after {
+      width: 46px;
+      height: 10px;
+      right: 11px;
+      bottom: 10px;
+      background: rgba(255,255,255,.62);
+      animation-delay: -1.8s;
     }
 
     .hero {
       position: relative;
       isolation: isolate;
       overflow: hidden;
-      min-height: 126px;
+      min-height: 148px;
       border: 1px solid var(--line);
       border-radius: var(--radius-xl);
-      padding: 24px 22px;
+      padding: 18px;
       background:
         linear-gradient(135deg, rgba(255,255,255,.84), rgba(255,255,255,.46)),
         rgba(255,255,255,.58);
@@ -168,6 +187,11 @@
       -webkit-backdrop-filter: blur(34px) saturate(1.45);
       box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.72);
       animation: rise .54s cubic-bezier(.2,.8,.2,1) both;
+      transform:
+        perspective(900px)
+        rotateX(calc((var(--py, .5) - .5) * -4deg))
+        rotateY(calc((var(--px, .5) - .5) * 5deg));
+      transition: transform .24s ease, border-color .24s ease;
     }
 
     .hero::before {
@@ -212,24 +236,81 @@
       transform: rotate(-8deg);
     }
 
-    .hero h2 {
+    .orbital {
       position: relative;
       z-index: 1;
-      margin: 0 0 10px;
-      max-width: 330px;
-      font-size: clamp(28px, 7vw, 40px);
-      line-height: 1.04;
-      letter-spacing: -.065em;
+      height: 112px;
+      border-radius: 28px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at calc(var(--px, .5) * 100%) calc(var(--py, .5) * 100%), rgba(255,255,255,.82), transparent 22%),
+        linear-gradient(135deg, rgba(255,255,255,.20), rgba(255,255,255,.06));
+      border: 1px solid rgba(255,255,255,.45);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.74);
     }
 
-    .hero p {
-      position: relative;
-      z-index: 1;
-      margin: 0;
-      max-width: 390px;
-      color: var(--muted);
-      line-height: 1.62;
-      font-size: 15px;
+    .orbital-core {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 58px;
+      height: 58px;
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at 26% 20%, rgba(255,255,255,.92), transparent 28%),
+        linear-gradient(145deg, #8290ff, #58d0c5 62%, #d7b8ff);
+      box-shadow:
+        0 24px 54px rgba(104,119,244,.22),
+        inset 0 1px 0 rgba(255,255,255,.75);
+      transform: translate(-50%, -50%) rotate(calc((var(--px, .5) - .5) * 18deg));
+      animation: breathe 4.8s ease-in-out infinite;
+    }
+
+    .orbital-ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 172px;
+      height: 72px;
+      border: 1px solid rgba(104,119,244,.18);
+      border-radius: 999px;
+      transform: translate(-50%, -50%) rotate(-12deg);
+      animation: orbitTilt 7.5s ease-in-out infinite alternate;
+    }
+
+    .orbital-ring::before,
+    .orbital-ring::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.78);
+      box-shadow: 0 8px 24px rgba(86,199,188,.22);
+    }
+
+    .orbital-ring::before { left: 18px; top: 6px; }
+    .orbital-ring::after { right: 24px; bottom: 3px; background: rgba(104,119,244,.42); }
+
+    .orbital-line {
+      position: absolute;
+      left: 22px;
+      right: 22px;
+      bottom: 24px;
+      height: 2px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(48,72,98,.08);
+    }
+
+    .orbital-line::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 36%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, transparent, rgba(104,119,244,.46), rgba(86,199,188,.48), transparent);
+      animation: scan 3.6s ease-in-out infinite;
     }
 
     .toolbar {
@@ -332,12 +413,14 @@
       pointer-events: none;
       opacity: .75;
       background:
-        radial-gradient(circle at 18% 0%, rgba(255,255,255,.78), transparent 12rem),
+        radial-gradient(circle at calc(var(--px, .18) * 100%) calc(var(--py, 0) * 100%), rgba(255,255,255,.84), transparent 12rem),
+        radial-gradient(circle at calc(var(--px, .5) * 100%) calc(var(--py, .5) * 100%), rgba(104,119,244,.10), transparent 9rem),
         linear-gradient(90deg, rgba(104,119,244,.10), transparent 42%);
       mix-blend-mode: screen;
     }
 
     .card > * { position: relative; z-index: 1; }
+    .card.is-touching { border-color: rgba(104,119,244,.24); }
 
     .card-main {
       display: flex;
@@ -608,8 +691,7 @@
     }
 
     @media (max-width: 420px) {
-      .hero { min-height: 118px; border-radius: 30px; }
-      .hero h2 { font-size: 32px; }
+      .hero { min-height: 142px; border-radius: 30px; }
       .actions { grid-template-columns: 1fr 1fr; }
     }
 
@@ -626,18 +708,15 @@
 <body>
   <main class="app">
     <header class="top">
-      <div class="brand">
-        <div class="mark" aria-hidden="true">✦</div>
-        <div>
-          <p class="eyebrow">Vault</p>
-          <h1>口袋保险箱</h1>
-        </div>
-      </div>
-      <div class="count" id="count">0 条</div>
+      <div class="mini-widget" aria-hidden="true"></div>
     </header>
 
-    <section class="hero">
-      <h2>一处收好。</h2>
+    <section class="hero" aria-label="动态玻璃组件">
+      <div class="orbital" aria-hidden="true">
+        <span class="orbital-ring"></span>
+        <span class="orbital-core"></span>
+        <span class="orbital-line"></span>
+      </div>
     </section>
 
     <section class="toolbar">
@@ -771,7 +850,7 @@
 
     function render() {
       const rows = filteredAccounts();
-      els.count.textContent = `${accounts.length} 条`;
+      if (els.count) els.count.textContent = String(accounts.length).padStart(2, '0');
       els.cards.innerHTML = '';
 
       if (!rows.length) {
@@ -784,6 +863,7 @@
         card.type = 'button';
         card.className = 'card';
         card.style.animationDelay = `${Math.min(index * 35, 180)}ms`;
+        bindInteractiveSurface(card);
         card.innerHTML = `
           <div class="card-main">
             <h3 class="title">${escapeHtml(compact(account.title, '未命名账号'))}</h3>
@@ -802,6 +882,28 @@
         `;
         card.addEventListener('click', () => openDetail(account.id));
         els.cards.appendChild(card);
+      });
+    }
+
+    function bindInteractiveSurface(element) {
+      const update = (clientX, clientY) => {
+        const rect = element.getBoundingClientRect();
+        const px = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+        const py = Math.max(0, Math.min(1, (clientY - rect.top) / rect.height));
+        element.style.setProperty('--px', px.toFixed(3));
+        element.style.setProperty('--py', py.toFixed(3));
+      };
+      element.addEventListener('pointermove', (event) => update(event.clientX, event.clientY));
+      element.addEventListener('pointerdown', (event) => {
+        element.classList.add('is-touching');
+        update(event.clientX, event.clientY);
+      });
+      element.addEventListener('pointerup', () => element.classList.remove('is-touching'));
+      element.addEventListener('pointercancel', () => element.classList.remove('is-touching'));
+      element.addEventListener('pointerleave', () => {
+        element.classList.remove('is-touching');
+        element.style.setProperty('--px', '.5');
+        element.style.setProperty('--py', '.5');
       });
     }
 
@@ -982,6 +1084,7 @@
     });
 
     render();
+    bindInteractiveSurface(document.querySelector('.hero'));
 
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('sw.js').catch(() => {});
