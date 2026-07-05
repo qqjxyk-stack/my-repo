@@ -155,6 +155,7 @@
 
     .hero {
       position: relative;
+      isolation: isolate;
       overflow: hidden;
       min-height: 154px;
       border: 1px solid var(--line);
@@ -169,34 +170,63 @@
       animation: rise .54s cubic-bezier(.2,.8,.2,1) both;
     }
 
+    .hero::before {
+      content: "";
+      position: absolute;
+      right: -36px;
+      top: -42px;
+      width: 230px;
+      height: 190px;
+      z-index: 0;
+      border-radius: 48px;
+      background:
+        radial-gradient(circle at 28% 32%, rgba(255,255,255,.92), transparent 25%),
+        radial-gradient(circle at 66% 44%, rgba(104,119,244,.34), transparent 34%),
+        radial-gradient(circle at 48% 78%, rgba(86,199,188,.30), transparent 34%);
+      filter: blur(18px) saturate(1.18);
+      opacity: .72;
+      transform: rotate(-10deg);
+    }
+
     .hero::after {
       content: "";
       position: absolute;
-      width: 210px;
-      height: 210px;
-      right: -72px;
-      top: -54px;
-      border-radius: 50%;
-      opacity: .24;
-      background: repeating-conic-gradient(from 16deg, rgba(105,119,244,.42) 0 7deg, rgba(86,199,188,.10) 7deg 14deg);
-      mask-image: radial-gradient(circle, black 0 48%, transparent 62%);
+      right: 22px;
+      top: 24px;
+      width: 156px;
+      height: 96px;
+      z-index: 0;
+      border: 1px solid rgba(255,255,255,.56);
+      border-radius: 32px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.72), rgba(255,255,255,.22)),
+        linear-gradient(135deg, rgba(104,119,244,.20), rgba(86,199,188,.18));
+      backdrop-filter: blur(22px) saturate(1.4);
+      -webkit-backdrop-filter: blur(22px) saturate(1.4);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.78),
+        0 18px 42px rgba(92,119,158,.14),
+        -54px 48px 0 -26px rgba(255,255,255,.52),
+        -86px 14px 0 -34px rgba(104,119,244,.18),
+        38px 70px 0 -38px rgba(86,199,188,.20);
+      transform: rotate(-8deg);
     }
 
     .hero h2 {
       position: relative;
       z-index: 1;
       margin: 0 0 10px;
-      max-width: 360px;
-      font-size: clamp(30px, 8vw, 44px);
-      line-height: 1.02;
-      letter-spacing: -.075em;
+      max-width: 330px;
+      font-size: clamp(28px, 7vw, 40px);
+      line-height: 1.04;
+      letter-spacing: -.065em;
     }
 
     .hero p {
       position: relative;
       z-index: 1;
       margin: 0;
-      max-width: 420px;
+      max-width: 390px;
       color: var(--muted);
       line-height: 1.62;
       font-size: 15px;
