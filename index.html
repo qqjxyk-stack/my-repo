@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>口袋保险箱</title>
-  <meta name="theme-color" content="#101820" />
+  <meta name="theme-color" content="#eef4fa" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="口袋保险箱" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -13,21 +13,24 @@
   <link rel="apple-touch-icon" href="vault-icon.svg" />
   <style>
     :root {
-      --ink: #101820;
-      --ink-2: #162331;
-      --card: rgba(26, 39, 53, .82);
-      --card-strong: rgba(31, 47, 63, .96);
-      --line: rgba(230, 207, 155, .18);
-      --line-2: rgba(255, 255, 255, .10);
-      --paper: #f8f0df;
-      --muted: #a8b5c2;
-      --gold: #d8b76f;
-      --gold-2: #f3d994;
-      --green: #65d6a6;
-      --red: #ff7777;
-      --shadow: 0 24px 80px rgba(0, 0, 0, .32);
+      color-scheme: light;
+      --bg: #eef4fa;
+      --ink: #14202b;
+      --muted: rgba(20, 32, 43, .56);
+      --soft: rgba(20, 32, 43, .76);
+      --line: rgba(48, 72, 98, .13);
+      --line-strong: rgba(48, 72, 98, .22);
+      --glass: rgba(255, 255, 255, .58);
+      --glass-strong: rgba(255, 255, 255, .72);
+      --field: rgba(255, 255, 255, .54);
+      --gold: #6877f4;
+      --gold-deep: #56c7bc;
+      --danger: #e35d6a;
+      --shadow: 0 24px 80px rgba(64, 91, 128, .20);
+      --radius-xl: 34px;
       --radius: 24px;
-      font-family: "PingFang SC", "SF Pro Display", "Microsoft YaHei", system-ui, sans-serif;
+      --radius-sm: 16px;
+      font-family: "SF Pro Display", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
     }
 
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -36,63 +39,67 @@
       margin: 0;
       min-height: 100vh;
       min-height: 100dvh;
-      color: var(--paper);
-      background:
-        radial-gradient(circle at 14% 8%, rgba(243, 217, 148, .24), transparent 18rem),
-        radial-gradient(circle at 90% 0%, rgba(101, 214, 166, .12), transparent 16rem),
-        linear-gradient(155deg, #080d12 0%, var(--ink) 48%, #0a1219 100%);
       overflow-x: hidden;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 4%, rgba(136, 151, 255, .32), transparent 23rem),
+        radial-gradient(circle at 86% 16%, rgba(108, 219, 207, .22), transparent 22rem),
+        radial-gradient(circle at 42% 86%, rgba(221, 175, 255, .20), transparent 22rem),
+        linear-gradient(145deg, #f7fbff 0%, #edf4fb 45%, #eaf0f8 100%);
     }
 
     body::before {
       content: "";
       position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: .28;
-      background-image:
-        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-      background-size: 28px 28px;
-      mask-image: linear-gradient(to bottom, black, transparent 70%);
+      inset: -30%;
+      z-index: -2;
+      background:
+        conic-gradient(from 90deg at 32% 34%, rgba(105,119,244,.18), transparent 18%, rgba(86,199,188,.16), transparent 54%, rgba(207,160,255,.14), transparent 78%),
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.72), transparent 18rem);
+      filter: blur(28px) saturate(1.25);
+      animation: ambience 18s ease-in-out infinite alternate;
     }
 
     body::after {
       content: "";
       position: fixed;
-      inset: -25%;
+      inset: 0;
       pointer-events: none;
-      background:
-        radial-gradient(circle at 22% 26%, rgba(243, 217, 148, .28), transparent 18rem),
-        radial-gradient(circle at 78% 18%, rgba(98, 178, 255, .16), transparent 16rem),
-        radial-gradient(circle at 55% 78%, rgba(101, 214, 166, .16), transparent 18rem);
-      filter: blur(18px) saturate(1.25);
-      animation: auroraDrift 16s ease-in-out infinite alternate;
       z-index: -1;
+      opacity: .18;
+      background-image:
+        linear-gradient(rgba(45,70,100,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(45,70,100,.06) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(to bottom, black, transparent 72%);
     }
 
-    @keyframes auroraDrift {
-      0% { transform: translate3d(-2%, -1%, 0) rotate(-3deg) scale(1); }
-      100% { transform: translate3d(3%, 2%, 0) rotate(4deg) scale(1.06); }
+    @keyframes ambience {
+      from { transform: translate3d(-2%, -1%, 0) rotate(-4deg) scale(1); }
+      to { transform: translate3d(3%, 2%, 0) rotate(5deg) scale(1.08); }
     }
 
-    @keyframes glassIn {
-      from { opacity: 0; transform: translateY(14px) scale(.985); filter: blur(4px); }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(16px) scale(.985); filter: blur(5px); }
       to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
     }
 
-    @keyframes softPulse {
-      0%, 100% { opacity: .42; transform: scale(1); }
-      50% { opacity: .72; transform: scale(1.08); }
+    @keyframes sheetIn {
+      from { opacity: 0; transform: translateY(20px) scale(.965); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     button, input, textarea { font: inherit; }
-    button { cursor: pointer; border: 0; }
+    button {
+      border: 0;
+      cursor: pointer;
+      color: inherit;
+    }
 
     .app {
-      width: min(100%, 760px);
+      width: min(100%, 720px);
       margin: 0 auto;
-      padding: calc(20px + env(safe-area-inset-top)) 16px calc(28px + env(safe-area-inset-bottom));
+      padding: calc(22px + env(safe-area-inset-top)) 16px calc(30px + env(safe-area-inset-bottom));
     }
 
     .top {
@@ -100,161 +107,167 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      margin: 8px 0 18px;
+      padding: 6px 2px 18px;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 13px;
     }
 
-    .seal {
+    .mark {
       width: 54px;
       height: 54px;
-      border-radius: 18px;
+      border-radius: 20px;
       display: grid;
       place-items: center;
-      color: #101820;
-      background: radial-gradient(circle at 30% 22%, #fff1bd, var(--gold) 60%, #9d7937);
-      box-shadow: 0 18px 38px rgba(216, 183, 111, .22), inset 0 0 0 1px rgba(255,255,255,.35);
-      font-size: 26px;
+      color: #ffffff;
+      background:
+        radial-gradient(circle at 26% 20%, rgba(255,255,255,.86), transparent 22%),
+        linear-gradient(145deg, #8d9bff, #5ad1c6 58%, #d7b8ff);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 18px 42px rgba(105, 119, 244, .20);
+      font-size: 24px;
       font-weight: 900;
-      animation: softPulse 4.6s ease-in-out infinite;
     }
 
     .eyebrow {
-      margin: 0 0 3px;
-      color: var(--gold-2);
+      margin: 0 0 4px;
+      color: var(--gold);
       font-size: 11px;
-      letter-spacing: .22em;
+      letter-spacing: .24em;
       text-transform: uppercase;
     }
 
     h1 {
       margin: 0;
-      font-size: 25px;
+      font-size: 27px;
       line-height: 1;
-      letter-spacing: -.05em;
+      letter-spacing: -.055em;
     }
 
     .count {
+      flex: none;
       color: var(--muted);
-      font-size: 13px;
-      white-space: nowrap;
+      font-size: 14px;
+      letter-spacing: -.02em;
     }
 
     .hero {
       position: relative;
       overflow: hidden;
+      min-height: 154px;
       border: 1px solid var(--line);
-      border-radius: 30px;
-      padding: 20px;
+      border-radius: var(--radius-xl);
+      padding: 22px;
       background:
-        linear-gradient(145deg, rgba(255,255,255,.14), rgba(255,255,255,.045)),
-        linear-gradient(145deg, rgba(32, 48, 63, .74), rgba(13, 22, 30, .56));
-      backdrop-filter: blur(28px) saturate(1.65);
-      -webkit-backdrop-filter: blur(28px) saturate(1.65);
-      box-shadow: var(--shadow);
-      margin-bottom: 14px;
-      animation: glassIn .52s cubic-bezier(.2,.8,.2,1) both;
+        linear-gradient(135deg, rgba(255,255,255,.84), rgba(255,255,255,.46)),
+        rgba(255,255,255,.58);
+      backdrop-filter: blur(34px) saturate(1.45);
+      -webkit-backdrop-filter: blur(34px) saturate(1.45);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.72);
+      animation: rise .54s cubic-bezier(.2,.8,.2,1) both;
     }
 
     .hero::after {
       content: "";
       position: absolute;
-      width: 170px;
-      height: 170px;
-      right: -66px;
-      top: -48px;
+      width: 210px;
+      height: 210px;
+      right: -72px;
+      top: -54px;
       border-radius: 50%;
-      background: repeating-conic-gradient(from 18deg, rgba(243,217,148,.55) 0 9deg, rgba(255,255,255,.04) 9deg 18deg);
-      opacity: .28;
+      opacity: .24;
+      background: repeating-conic-gradient(from 16deg, rgba(105,119,244,.42) 0 7deg, rgba(86,199,188,.10) 7deg 14deg);
+      mask-image: radial-gradient(circle, black 0 48%, transparent 62%);
     }
 
     .hero h2 {
       position: relative;
       z-index: 1;
-      margin: 0 0 8px;
-      font-size: 30px;
-      letter-spacing: -.06em;
+      margin: 0 0 10px;
+      max-width: 360px;
+      font-size: clamp(30px, 8vw, 44px);
+      line-height: 1.02;
+      letter-spacing: -.075em;
     }
 
     .hero p {
       position: relative;
       z-index: 1;
       margin: 0;
-      max-width: 440px;
+      max-width: 420px;
       color: var(--muted);
-      line-height: 1.65;
-      font-size: 14px;
+      line-height: 1.62;
+      font-size: 15px;
     }
 
     .toolbar {
       position: sticky;
       top: env(safe-area-inset-top);
-      z-index: 5;
+      z-index: 4;
       display: grid;
       grid-template-columns: 1fr auto;
       gap: 10px;
-      padding: 10px 0 12px;
-      backdrop-filter: blur(22px) saturate(1.55);
-      -webkit-backdrop-filter: blur(22px) saturate(1.55);
+      padding: 14px 0;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
     }
 
     .search, .input, .textarea {
       width: 100%;
-      min-height: 48px;
-      border: 1px solid var(--line-2);
-      border-radius: 18px;
+      min-height: 50px;
+      border: 1px solid var(--line);
+      border-radius: 19px;
       outline: none;
-      color: var(--paper);
+      color: var(--ink);
       background:
-        linear-gradient(180deg, rgba(255,255,255,.105), rgba(255,255,255,.04)),
-        rgba(13, 22, 30, .58);
-      backdrop-filter: blur(20px) saturate(1.45);
-      -webkit-backdrop-filter: blur(20px) saturate(1.45);
-      padding: 12px 14px;
+        linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,255,255,.56)),
+        rgba(255,255,255,.58);
+      backdrop-filter: blur(22px) saturate(1.5);
+      -webkit-backdrop-filter: blur(22px) saturate(1.5);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.82), 0 14px 40px rgba(64,91,128,.10);
+      padding: 12px 15px;
       font-size: 16px;
-      transition: border .18s, box-shadow .18s, background .18s;
     }
 
-    .search::placeholder, .input::placeholder, .textarea::placeholder { color: rgba(168,181,194,.68); }
+    .search::placeholder,
+    .input::placeholder,
+    .textarea::placeholder { color: rgba(20, 32, 43, .38); }
 
-    .search:focus, .input:focus, .textarea:focus {
-      border-color: rgba(243, 217, 148, .72);
-      box-shadow: 0 0 0 4px rgba(216,183,111,.13);
-      background: rgba(20, 32, 43, .96);
+    .search:focus,
+    .input:focus,
+    .textarea:focus {
+      border-color: rgba(104,119,244,.44);
+      box-shadow: 0 0 0 4px rgba(104,119,244,.12), inset 0 1px 0 rgba(255,255,255,.85);
     }
 
     .btn {
-      min-height: 48px;
-      padding: 0 17px;
-      border-radius: 18px;
-      color: #101820;
-      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      min-height: 50px;
+      padding: 0 18px;
+      border-radius: 19px;
+      color: #ffffff;
+      background: linear-gradient(145deg, #7d8cff, #55cfc4);
       font-weight: 850;
-      box-shadow: 0 15px 36px rgba(216, 183, 111, .18);
-      transition: transform .16s ease, filter .16s ease, box-shadow .16s ease;
+      box-shadow: 0 18px 38px rgba(104,119,244,.20), inset 0 1px 0 rgba(255,255,255,.38);
+      transition: transform .16s ease, filter .16s ease;
     }
 
-    .btn:hover { filter: brightness(1.04); box-shadow: 0 18px 42px rgba(216, 183, 111, .23); }
-
-    .btn:active, .chip:active { transform: scale(.985); }
-
     .btn.ghost {
-      color: var(--paper);
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--line-2);
-      box-shadow: none;
+      color: var(--soft);
+      background: rgba(255,255,255,.58);
+      border: 1px solid var(--line);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.72);
     }
 
     .btn.danger {
-      color: #ffe0e0;
-      background: rgba(255, 119, 119, .12);
-      border: 1px solid rgba(255, 119, 119, .32);
+      color: #c23d4b;
+      background: rgba(255,123,123,.12);
+      border: 1px solid rgba(227,93,106,.24);
       box-shadow: none;
     }
+
+    .btn:active, .card:active, .chip:active { transform: scale(.985); }
 
     .cards {
       display: grid;
@@ -264,17 +277,22 @@
     .card {
       position: relative;
       overflow: hidden;
+      display: grid;
+      gap: 13px;
+      min-height: 132px;
+      width: 100%;
+      text-align: left;
       border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 16px;
+      border-radius: 28px;
+      padding: 18px;
       background:
-        linear-gradient(155deg, rgba(255,255,255,.13), rgba(255,255,255,.035)),
-        linear-gradient(180deg, rgba(31,47,63,.76), rgba(26,39,53,.54));
-      backdrop-filter: blur(26px) saturate(1.7);
-      -webkit-backdrop-filter: blur(26px) saturate(1.7);
-      box-shadow: 0 16px 46px rgba(0,0,0,.20);
-      animation: glassIn .44s cubic-bezier(.2,.8,.2,1) both;
-      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+        linear-gradient(145deg, rgba(255,255,255,.92), rgba(255,255,255,.52)),
+        rgba(255,255,255,.58);
+      backdrop-filter: blur(28px) saturate(1.35);
+      -webkit-backdrop-filter: blur(28px) saturate(1.35);
+      box-shadow: 0 18px 54px rgba(64,91,128,.14), inset 0 1px 0 rgba(255,255,255,.80);
+      animation: rise .45s cubic-bezier(.2,.8,.2,1) both;
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
     }
 
     .card::before {
@@ -282,17 +300,16 @@
       position: absolute;
       inset: 0;
       pointer-events: none;
+      opacity: .75;
       background:
-        radial-gradient(circle at 24% 0%, rgba(255,255,255,.20), transparent 13rem),
-        linear-gradient(90deg, rgba(255,255,255,.18), transparent 36%);
-      opacity: .62;
+        radial-gradient(circle at 18% 0%, rgba(255,255,255,.78), transparent 12rem),
+        linear-gradient(90deg, rgba(104,119,244,.10), transparent 42%);
       mix-blend-mode: screen;
     }
 
     .card > * { position: relative; z-index: 1; }
-    .card:hover { transform: translateY(-2px); border-color: rgba(243,217,148,.34); box-shadow: 0 22px 62px rgba(0,0,0,.26); }
 
-    .card-head {
+    .card-main {
       display: flex;
       justify-content: space-between;
       gap: 12px;
@@ -301,97 +318,64 @@
 
     .title {
       margin: 0;
-      font-size: 18px;
-      letter-spacing: -.025em;
+      color: var(--ink);
+      font-size: 20px;
+      line-height: 1.18;
+      letter-spacing: -.045em;
       word-break: break-word;
     }
 
-    .date {
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .pill {
+    .chevron {
+      width: 31px;
+      height: 31px;
       flex: none;
       border-radius: 999px;
-      padding: 6px 9px;
-      color: var(--gold-2);
-      background: rgba(216,183,111,.12);
-      font-size: 12px;
-    }
-
-    .field {
-      margin-top: 12px;
       display: grid;
-      gap: 6px;
+      place-items: center;
+      color: rgba(20,32,43,.52);
+      background: rgba(255,255,255,.62);
+      border: 1px solid rgba(48,72,98,.10);
     }
 
-    .label {
+    .summary {
+      display: grid;
+      gap: 7px;
       color: var(--muted);
-      font-size: 12px;
-    }
-
-    .value {
-      min-height: 42px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      padding: 10px 12px;
-      border-radius: 16px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.03)),
-        rgba(3, 8, 13, .24);
-      backdrop-filter: blur(16px) saturate(1.35);
-      -webkit-backdrop-filter: blur(16px) saturate(1.35);
-      border: 1px solid rgba(255,255,255,.06);
-      word-break: break-all;
-    }
-
-    .value code {
-      color: var(--gold-2);
-      font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
       font-size: 14px;
+      line-height: 1.45;
     }
 
-    .note {
-      color: #d2dbe2;
-      line-height: 1.55;
-      white-space: pre-wrap;
+    .summary-row {
+      display: flex;
+      gap: 9px;
+      min-width: 0;
     }
 
-    .actions {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-top: 14px;
+    .summary-label {
+      flex: none;
+      color: rgba(104,119,244,.76);
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
     }
 
-    .chip {
-      min-height: 40px;
-      border-radius: 14px;
-      color: var(--paper);
-      background: rgba(255,255,255,.06);
-      border: 1px solid var(--line-2);
-      font-size: 13px;
-      backdrop-filter: blur(14px) saturate(1.45);
-      -webkit-backdrop-filter: blur(14px) saturate(1.45);
-      transition: transform .14s ease, background .14s ease, border-color .14s ease;
+    .summary-text {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-
-    .chip:hover { background: rgba(255,255,255,.10); border-color: rgba(243,217,148,.28); }
-
-    .chip.warn { color: #ffd7d7; border-color: rgba(255, 119, 119, .28); }
 
     .empty {
-      border: 1px dashed rgba(243,217,148,.25);
-      border-radius: 26px;
-      padding: 36px 18px;
+      border: 1px dashed rgba(48,72,98,.16);
+      border-radius: 28px;
+      padding: 40px 20px;
       text-align: center;
       color: var(--muted);
-      background: rgba(20, 32, 43, .44);
-      line-height: 1.7;
+      background: rgba(255,255,255,.50);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      line-height: 1.75;
     }
 
     .utility {
@@ -404,22 +388,127 @@
     dialog {
       width: min(94vw, 560px);
       max-height: min(88vh, 760px);
-      border: 1px solid rgba(243,217,148,.25);
-      border-radius: 28px;
-      color: var(--paper);
-      background:
-        linear-gradient(155deg, rgba(255,255,255,.15), rgba(255,255,255,.04)),
-        linear-gradient(180deg, rgba(30,48,64,.88), rgba(16,24,32,.78));
-      backdrop-filter: blur(32px) saturate(1.75);
-      -webkit-backdrop-filter: blur(32px) saturate(1.75);
+      overflow: auto;
+      border: 1px solid rgba(48,72,98,.16);
+      border-radius: 32px;
       padding: 0;
-      box-shadow: var(--shadow);
+      color: var(--ink);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.96), rgba(255,255,255,.66)),
+        rgba(238,244,250,.78);
+      backdrop-filter: blur(38px) saturate(1.72);
+      -webkit-backdrop-filter: blur(38px) saturate(1.72);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,.86);
+      animation: sheetIn .24s cubic-bezier(.2,.8,.2,1) both;
     }
 
     dialog::backdrop {
-      background: rgba(0,0,0,.66);
-      backdrop-filter: blur(7px);
-      -webkit-backdrop-filter: blur(7px);
+      background: rgba(31,48,66,.34);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .sheet {
+      display: grid;
+      gap: 15px;
+      padding: 20px;
+    }
+
+    .sheet-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .sheet-title {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: -.06em;
+      word-break: break-word;
+    }
+
+    .close {
+      width: 36px;
+      height: 36px;
+      flex: none;
+      border-radius: 999px;
+      color: var(--ink);
+      background: rgba(255,255,255,.70);
+      border: 1px solid rgba(48,72,98,.10);
+    }
+
+    .detail-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .detail {
+      display: grid;
+      gap: 7px;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .value {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 12px 14px;
+      color: var(--soft);
+      background: rgba(255,255,255,.58);
+      word-break: break-all;
+    }
+
+    .value code {
+      color: var(--gold);
+      font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+      font-size: 14px;
+    }
+
+    .note {
+      white-space: pre-wrap;
+      line-height: 1.55;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 3px;
+    }
+
+    .chip {
+      min-height: 46px;
+      border-radius: 17px;
+      color: var(--ink);
+      background: rgba(255,255,255,.58);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      font-weight: 650;
+    }
+
+    .chip.gold {
+      color: #ffffff;
+      background: linear-gradient(145deg, #7d8cff, #55cfc4);
+      border: 0;
+    }
+
+    .chip.warn {
+      color: #c23d4b;
+      border-color: rgba(227,93,106,.26);
+      background: rgba(255,123,123,.12);
     }
 
     .form {
@@ -428,7 +517,11 @@
       padding: 20px;
     }
 
-    .form h2 { margin: 0 0 2px; letter-spacing: -.04em; }
+    .form h2 {
+      margin: 0 0 2px;
+      font-size: 28px;
+      letter-spacing: -.06em;
+    }
 
     label {
       display: grid;
@@ -437,7 +530,10 @@
       font-size: 13px;
     }
 
-    .textarea { min-height: 92px; resize: vertical; }
+    .textarea {
+      min-height: 96px;
+      resize: vertical;
+    }
 
     .form-actions {
       display: grid;
@@ -451,35 +547,40 @@
       left: 16px;
       right: 16px;
       bottom: calc(18px + env(safe-area-inset-bottom));
-      z-index: 10;
+      z-index: 20;
       width: min(520px, calc(100% - 32px));
       margin: 0 auto;
       padding: 13px 15px;
       border: 1px solid var(--line);
       border-radius: 18px;
-      background: rgba(9, 15, 21, .92);
-      color: var(--paper);
+      background: rgba(255,255,255,.82);
+      color: var(--ink);
       box-shadow: var(--shadow);
       text-align: center;
       opacity: 0;
       transform: translateY(12px);
       transition: .22s;
       pointer-events: none;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
     }
 
-    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     .hidden { display: none !important; }
 
     @media (min-width: 700px) {
       .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .card { min-height: 260px; }
+      .card { min-height: 146px; }
     }
 
     @media (max-width: 420px) {
-      .actions { grid-template-columns: repeat(2, 1fr); }
-      .hero h2 { font-size: 27px; }
-      .hero { border-radius: 26px; }
+      .hero { min-height: 140px; border-radius: 30px; }
+      .hero h2 { font-size: 32px; }
+      .actions { grid-template-columns: 1fr 1fr; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -496,7 +597,7 @@
   <main class="app">
     <header class="top">
       <div class="brand">
-        <div class="seal" aria-hidden="true">✦</div>
+        <div class="mark" aria-hidden="true">✦</div>
         <div>
           <p class="eyebrow">Vault</p>
           <h1>口袋保险箱</h1>
@@ -506,12 +607,12 @@
     </header>
 
     <section class="hero">
-      <h2>你的账号钥匙柜。</h2>
-      <p>保存账号、密码、网址和备注。打开就能查，复制一下就能用。</p>
+      <h2>只看要紧的。</h2>
+      <p>列表保持干净：标题、账号和备注。密码与更多细节，点开再看。</p>
     </section>
 
     <section class="toolbar">
-      <input id="search" class="search" autocomplete="off" placeholder="搜索账号、标题、网址…" />
+      <input id="search" class="search" autocomplete="off" placeholder="搜索标题、账号、备注…" />
       <button id="add" class="btn">新增</button>
     </section>
 
@@ -523,6 +624,10 @@
       <input id="file" class="hidden" type="file" accept="application/json,.json" />
     </section>
   </main>
+
+  <dialog id="detailDialog">
+    <section class="sheet" id="detailContent"></section>
+  </dialog>
 
   <dialog id="editor">
     <form id="form" class="form">
@@ -541,7 +646,7 @@
         <input id="website" class="input" placeholder="https://example.com" />
       </label>
       <label>备注
-        <textarea id="note" class="textarea" placeholder="密保、用途、到期时间……"></textarea>
+        <textarea id="note" class="textarea" placeholder="用途、到期时间、密保提示……"></textarea>
       </label>
       <div class="form-actions">
         <button type="button" id="cancel" class="btn ghost">取消</button>
@@ -560,6 +665,8 @@
       count: $('#count'),
       search: $('#search'),
       add: $('#add'),
+      detailDialog: $('#detailDialog'),
+      detailContent: $('#detailContent'),
       editor: $('#editor'),
       form: $('#form'),
       editorTitle: $('#editorTitle'),
@@ -577,6 +684,7 @@
     };
 
     let accounts = loadAccounts();
+    let selectedId = null;
 
     function uid() {
       return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
@@ -619,11 +727,16 @@
       return '•'.repeat(length);
     }
 
+    function compact(value, fallback) {
+      const text = String(value || '').trim();
+      return text || fallback;
+    }
+
     function filteredAccounts() {
       const q = els.search.value.trim().toLowerCase();
       const sorted = [...accounts].sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')));
       if (!q) return sorted;
-      return sorted.filter((a) => [a.title, a.username, a.password, a.website, a.note]
+      return sorted.filter((a) => [a.title, a.username, a.note, a.website]
         .some((v) => String(v || '').toLowerCase().includes(q)));
     }
 
@@ -637,47 +750,82 @@
         return;
       }
 
-      for (const account of rows) {
-        const card = document.createElement('article');
+      rows.forEach((account, index) => {
+        const card = document.createElement('button');
+        card.type = 'button';
         card.className = 'card';
+        card.style.animationDelay = `${Math.min(index * 35, 180)}ms`;
         card.innerHTML = `
-          <div class="card-head">
-            <div>
-              <h3 class="title">${escapeHtml(account.title || '未命名账号')}</h3>
-              <div class="date">更新于 ${escapeHtml(account.updatedAt || account.createdAt || '')}</div>
+          <div class="card-main">
+            <h3 class="title">${escapeHtml(compact(account.title, '未命名账号'))}</h3>
+            <span class="chevron" aria-hidden="true">›</span>
+          </div>
+          <div class="summary">
+            <div class="summary-row">
+              <span class="summary-label">账号</span>
+              <span class="summary-text">${escapeHtml(compact(account.username, '未填写'))}</span>
             </div>
-            <div class="pill">私密</div>
-          </div>
-          <div class="field">
-            <div class="label">账号</div>
-            <div class="value"><span>${escapeHtml(account.username || '未填写')}</span></div>
-          </div>
-          <div class="field">
-            <div class="label">密码</div>
-            <div class="value"><code>${mask(account.password)}</code><button class="chip reveal">显示</button></div>
-          </div>
-          ${account.website ? `<div class="field"><div class="label">网址</div><div class="value"><span>${escapeHtml(account.website)}</span></div></div>` : ''}
-          ${account.note ? `<div class="field"><div class="label">备注</div><div class="value note">${escapeHtml(account.note)}</div></div>` : ''}
-          <div class="actions">
-            <button class="chip copy-user">复制账号</button>
-            <button class="chip copy-pass">复制密码</button>
-            <button class="chip edit">编辑</button>
-            <button class="chip warn delete">删除</button>
+            <div class="summary-row">
+              <span class="summary-label">备注</span>
+              <span class="summary-text">${escapeHtml(compact(account.note, '无备注'))}</span>
+            </div>
           </div>
         `;
-
-        let shown = false;
-        card.querySelector('.reveal').addEventListener('click', () => {
-          shown = !shown;
-          card.querySelector('code').textContent = shown ? (account.password || '') : mask(account.password);
-          card.querySelector('.reveal').textContent = shown ? '隐藏' : '显示';
-        });
-        card.querySelector('.copy-user').addEventListener('click', () => copyText(account.username, '账号已复制'));
-        card.querySelector('.copy-pass').addEventListener('click', () => copyText(account.password, '密码已复制'));
-        card.querySelector('.edit').addEventListener('click', () => openEditor(account));
-        card.querySelector('.delete').addEventListener('click', () => deleteAccount(account.id));
+        card.addEventListener('click', () => openDetail(account.id));
         els.cards.appendChild(card);
-      }
+      });
+    }
+
+    function openDetail(id) {
+      const account = accounts.find((a) => a.id === id);
+      if (!account) return;
+      selectedId = id;
+      let shown = false;
+      els.detailContent.innerHTML = `
+        <div class="sheet-head">
+          <h2 class="sheet-title">${escapeHtml(compact(account.title, '未命名账号'))}</h2>
+          <button class="close" type="button" aria-label="关闭">×</button>
+        </div>
+        <div class="detail-grid">
+          <div class="detail">
+            <div class="label">账号</div>
+            <div class="value"><span>${escapeHtml(compact(account.username, '未填写'))}</span></div>
+          </div>
+          <div class="detail">
+            <div class="label">密码</div>
+            <div class="value"><code>${mask(account.password)}</code><button class="chip reveal" type="button">显示</button></div>
+          </div>
+          <div class="detail">
+            <div class="label">网址</div>
+            <div class="value"><span>${escapeHtml(compact(account.website, '未填写'))}</span></div>
+          </div>
+          <div class="detail">
+            <div class="label">备注</div>
+            <div class="value note">${escapeHtml(compact(account.note, '无备注'))}</div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="chip gold copy-user" type="button">复制账号</button>
+          <button class="chip gold copy-pass" type="button">复制密码</button>
+          <button class="chip edit" type="button">编辑</button>
+          <button class="chip warn delete" type="button">删除</button>
+        </div>
+      `;
+
+      els.detailContent.querySelector('.close').addEventListener('click', () => els.detailDialog.close());
+      els.detailContent.querySelector('.reveal').addEventListener('click', () => {
+        shown = !shown;
+        els.detailContent.querySelector('code').textContent = shown ? (account.password || '') : mask(account.password);
+        els.detailContent.querySelector('.reveal').textContent = shown ? '隐藏' : '显示';
+      });
+      els.detailContent.querySelector('.copy-user').addEventListener('click', () => copyText(account.username, '账号已复制'));
+      els.detailContent.querySelector('.copy-pass').addEventListener('click', () => copyText(account.password, '密码已复制'));
+      els.detailContent.querySelector('.edit').addEventListener('click', () => {
+        els.detailDialog.close();
+        openEditor(account);
+      });
+      els.detailContent.querySelector('.delete').addEventListener('click', () => deleteAccount(account.id));
+      els.detailDialog.showModal();
     }
 
     async function copyText(value, message) {
@@ -714,6 +862,7 @@
       if (!confirm(`删除「${account.title || '未命名账号'}」？这个操作不能撤销。`)) return;
       accounts = accounts.filter((a) => a.id !== id);
       saveAccounts();
+      els.detailDialog.close();
       render();
       toast('已删除');
     }
@@ -798,6 +947,9 @@
     });
     els.editor.addEventListener('click', (event) => {
       if (event.target === els.editor) closeEditor();
+    });
+    els.detailDialog.addEventListener('click', (event) => {
+      if (event.target === els.detailDialog) els.detailDialog.close();
     });
 
     render();
